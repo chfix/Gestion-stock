@@ -32,7 +32,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Website');
+            ->setTitle('Inventory Management Website | Admin Dashboard');
     }
 
     public function configureMenuItems(): iterable
