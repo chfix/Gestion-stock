@@ -39,30 +39,30 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {        
-        yield MenuItem::section('Users');
+        //yield MenuItem::section('Users');
 
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+        yield MenuItem::subMenu('Manage Users', 'fas fa-bars')->setSubItems([
 
             MenuItem::linkToCrud('Show Users', 'fas fa-eye', User::class)
         ]);
 
-        yield MenuItem::section('Products');
+        //yield MenuItem::section('Products');
 
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+        yield MenuItem::subMenu('Manage Products', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Create Product', 'fas fa-plus', Product::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show All Products', 'fas fa-eye', Product::class)
         ]);
 
-        yield MenuItem::section('Categories');
+        //yield MenuItem::section('Categories');
 
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+        yield MenuItem::subMenu('Manage Categories', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Create Category', 'fas fa-plus', Category::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show All Categories', 'fas fa-eye', Category::class)
         ]);
 
-        yield MenuItem::section('Orders');
+        //yield MenuItem::section('Orders');
 
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+        yield MenuItem::subMenu('Manage Orders', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Create an Order', 'fas fa-plus', Order::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show All Orders', 'fas fa-eye', Order::class)
         ]);
