@@ -37,8 +37,13 @@ class DashboardController extends AbstractDashboardController
     }
 
     public function configureMenuItems(): iterable
-    {
-        
+    {        
+        yield MenuItem::section('Users');
+
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Create User', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Users', 'fas fa-eye', User::class)
+        ]);
 
         yield MenuItem::section('Products');
 
@@ -54,11 +59,5 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Show Categories', 'fas fa-eye', Category::class)
         ]);
         
-        yield MenuItem::section('Users');
-
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
-            MenuItem::linkToCrud('Create User', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Users', 'fas fa-eye', User::class)
-        ]);
     }
 }
