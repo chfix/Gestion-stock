@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -49,14 +50,21 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Create Product', 'fas fa-plus', Product::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Products', 'fas fa-eye', Product::class)
+            MenuItem::linkToCrud('Show All Products', 'fas fa-eye', Product::class)
         ]);
 
         yield MenuItem::section('Categories');
 
         yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Create Category', 'fas fa-plus', Category::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Categories', 'fas fa-eye', Category::class)
+            MenuItem::linkToCrud('Show All Categories', 'fas fa-eye', Category::class)
+        ]);
+
+        yield MenuItem::section('Orders');
+
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Create an Order', 'fas fa-plus', Order::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show All Orders', 'fas fa-eye', Order::class)
         ]);
         
     }
