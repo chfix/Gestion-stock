@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+    
+{% block body %}
+
+
+<div class="example-wrapper">
+
+
+
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <strong>Hello Dear User</strong> <a href="{{ path('app_login') }}" class="alert-link">login</a> and try refreshing again.
+</div>
+
+
+
+<div class="d-grid gap-2 ">
+  <a class="btn btn-lg btn-primary btn-light" type="button" href="{{ path('app_login') }}">Login</a>
+</br>
+  <a class="btn btn-lg btn-primary btn-dark" type="button" href="{{ path('app_register') }}">Register</a>
+</div>
+
+
+</div>
+{% endblock %}

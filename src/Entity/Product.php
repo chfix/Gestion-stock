@@ -38,6 +38,9 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
+    #[ORM\Column(type: 'integer')]
+    private $Quantity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->Quantity;
+    }
+
+    public function setQuantity(int $Quantity): self
+    {
+        $this->Quantity = $Quantity;
 
         return $this;
     }

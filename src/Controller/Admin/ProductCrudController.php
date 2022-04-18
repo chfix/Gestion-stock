@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -58,6 +59,8 @@ class ProductCrudController extends AbstractCrudController
 
             BooleanField::new('active'),
 
+            IntegerField::new('Quantity'),
+
             AssociationField::new('category')->setQueryBuilder(function (QueryBuilder $queryBuilder) {
                 $queryBuilder->where('entity.active = true');
             }),
@@ -67,7 +70,7 @@ class ProductCrudController extends AbstractCrudController
         ];
     }
 
-    /*
+    
     public function persistEntity(EntityManagerInterface $em, $entityInstance): void
     {
         if (!$entityInstance instanceof Product) return;
@@ -80,7 +83,7 @@ class ProductCrudController extends AbstractCrudController
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
         parent::updateEntity($em, $entityInstance);
     }
-    */
+    
 
     public function duplicateProduct(
         AdminContext $context,
