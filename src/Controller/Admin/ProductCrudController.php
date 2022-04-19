@@ -49,7 +49,7 @@ class ProductCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Label'),
-            TextEditorField::new('description'),
+            TextEditorField::new('description')->setRequired(false),
             MoneyField::new('price')->setCurrency('EUR'),
 
             ImageField::new('image')

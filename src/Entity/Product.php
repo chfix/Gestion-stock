@@ -16,7 +16,7 @@ class Product
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]

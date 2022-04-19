@@ -60,9 +60,22 @@ class OrderCrudController extends AbstractCrudController
         $pqte = $product->getQuantity();
         $qte = $entityInstance->getQuantity();
 
-        $product->setQuantity($pqte-$qte);
+        $oqte = ($pqte-$qte);
+
+        if ($pqte > $qte)
+        {
+            $product->setQuantity($oqte);
         $entityInstance->setTotalPrice($qte*$uprice);
-        parent::persistEntity($em, $entityInstance);     
+        parent::persistEntity($em, $entityInstance); 
+        }
+        else {
+            $this->addFlash(
+            'notice',
+            'Product quantity requested isnt available, try choosing a smaller quantity'
+        );
+        }
+        
+            
     }
 
     public function updateEntity(EntityManagerInterface $em, $entityInstance): void
