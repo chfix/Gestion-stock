@@ -3,15 +3,16 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Order;
+use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class OrderCrudController extends AbstractCrudController
 {
@@ -20,39 +21,54 @@ class OrderCrudController extends AbstractCrudController
         return Order::class;
     }
 
-    
+
+   
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
 
-            AssociationField::new('product')->setQueryBuilder(function (QueryBuilder $queryBuilder) {
+            AssociationField::new('Product')->setQueryBuilder(function (QueryBuilder $queryBuilder) {
                 $queryBuilder->where('entity.active = true');
             }),
 
-            MoneyField::new('Total_price')->setCurrency('EUR'),
+            MoneyField::new('unity_price')->setCurrency('EUR')->hideOnForm(),
 
-            IntegerField::new('ProductQuantity','Product quantity'),
+            IntegerField::new('quantity'),
+
+            MoneyField::new('total_price')->setCurrency('EUR')->hideOnForm(),
+
 
             DateTimeField::new('updatedAt')->hideOnForm(),
             DateTimeField::new('createdAt')->hideOnForm(),
-
-            BooleanField::new('Settled'),
         ];
     }
+
+    
+
     public function persistEntity(EntityManagerInterface $em, $entityInstance): void
     {
         if (!$entityInstance instanceof Order) return;
-
         $entityInstance->setCreatedAt(new \DateTimeImmutable);
 
-        parent::persistEntity($em, $entityInstance);
+        $product = $entityInstance->getProduct();
+
+        
+        $uprice = $product->getPrice();
+        $entityInstance->setUnityPrice($uprice);
+
+        $pqte = $product->getQuantity();
+        $qte = $entityInstance->getQuantity();
+
+        $product->setQuantity($pqte-$qte);
+        $entityInstance->setTotalPrice($qte*$uprice);
+        parent::persistEntity($em, $entityInstance);     
     }
-    public function deleteEntity(EntityManagerInterface $em, $entityInstance): void
+
+    public function updateEntity(EntityManagerInterface $em, $entityInstance): void
     {
         if (!$entityInstance instanceof Order) return;
-
-        parent::deleteEntity($em, $entityInstance);
+        $entityInstance->setUpdatedAt(new \DateTimeImmutable);
+        parent::updateEntity($em, $entityInstance);
     }
-    
 }

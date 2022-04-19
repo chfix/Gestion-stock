@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -16,42 +14,74 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private $updatedAt;
+    #[ORM\OneToOne(inversedBy: 'orders', targetEntity: Product::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $Product;
+
+    #[ORM\Column(type: 'float')]
+    private $unity_price;
+
+    #[ORM\Column(type: 'float')]
+    private $total_price;
+
+    #[ORM\Column(type: 'integer')]
+    private $quantity;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
-    #[ORM\ManyToMany(targetEntity: Product::class)]
-    private $product;
-
-    #[ORM\Column(type: 'float')]
-    private $Total_price;
-
-    #[ORM\Column(type: 'boolean')]
-    private $Settled;
-
-    #[ORM\Column(type: 'integer')]
-    private $ProductQuantity;
-
-    public function __construct()
-    {
-        $this->product = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $updatedAt;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getProduct(): ?Product
     {
-        return $this->updatedAt;
+        return $this->Product;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    public function setProduct(Product $Product): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->Product = $Product;
+
+        return $this;
+    }
+
+    public function getUnityPrice(): ?float
+    {
+        return $this->unity_price;
+    }
+
+    public function setUnityPrice(float $unity_price): self
+    {
+        $this->unity_price = $unity_price;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): ?float
+    {
+        return $this->total_price;
+    }
+
+    public function setTotalPrice(float $total_price): self
+    {
+        $this->total_price = $total_price;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
@@ -68,62 +98,14 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection<int, product>
-     */
-    public function getProduct(): Collection
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->product;
+        return $this->updatedAt;
     }
 
-    public function addProduct(product $product): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
-        if (!$this->product->contains($product)) {
-            $this->product[] = $product;
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(product $product): self
-    {
-        $this->product->removeElement($product);
-
-        return $this;
-    }
-
-    public function getTotalPrice(): ?float
-    {
-        return $this->Total_price;
-    }
-
-    public function setTotalPrice(float $Total_price): self
-    {
-        $this->Total_price = $Total_price;
-
-        return $this;
-    }
-
-    public function getSettled(): ?bool
-    {
-        return $this->Settled;
-    }
-
-    public function setSettled(bool $Settled): self
-    {
-        $this->Settled = $Settled;
-
-        return $this;
-    }
-
-    public function getProductQuantity(): ?int
-    {
-        return $this->ProductQuantity;
-    }
-
-    public function setProductQuantity(int $ProductQuantity): self
-    {
-        $this->ProductQuantity = $ProductQuantity;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

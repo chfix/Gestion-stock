@@ -41,6 +41,9 @@ class Product
     #[ORM\Column(type: 'integer')]
     private $Quantity;
 
+    #[ORM\OneToOne(mappedBy: 'Product', targetEntity: Order::class, cascade: ['persist', 'remove'])]
+    private $orders;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,5 +158,22 @@ class Product
     }
     public function __toString() {
         return $this->name;
+    }
+
+    public function getOrders(): ?Order
+    {
+        return $this->orders;
+    }
+
+    public function setOrders(Order $orders): self
+    {
+        // set the owning side of the relation if necessary
+        if ($orders->getProduct() !== $this) {
+            $orders->setProduct($this);
+        }
+
+        $this->orders = $orders;
+
+        return $this;
     }
 }
