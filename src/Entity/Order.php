@@ -14,7 +14,7 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToOne(inversedBy: 'orders', targetEntity: Product::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'orders', targetEntity: Product::class, cascade:["persist","remove"])]
     #[ORM\JoinColumn(nullable: false)]
     private $Product;
 

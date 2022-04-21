@@ -41,7 +41,7 @@ class Product
     #[ORM\Column(type: 'integer')]
     private $Quantity;
 
-    #[ORM\OneToOne(mappedBy: 'Product', targetEntity: Order::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'Product', targetEntity: Order::class, cascade:["persist","remove"])]
     private $orders;
 
     public function getId(): ?int
