@@ -10,6 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
+
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
@@ -24,17 +25,23 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
- /*
+
+/*
     public function login(AuthenticationUtils $authenticationUtils): Response
         {
-            $error = $authenticationUtils->getLastAuthenticationError();
-            $lastUsername = $authenticationUtils->getLastUsername();
-    
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+
+
             return $this->render('@EasyAdmin/page/login.html.twig', [
                 // parameters usually defined in Symfony login forms
                 'error' => $error,
                 'last_username' => $lastUsername,
-    
+
+         
                 // OPTIONAL parameters to customize the login form:
     
                 // the translation_domain to use (define this option only if you are
@@ -53,8 +60,8 @@ class SecurityController extends AbstractController
                 'csrf_token_intention' => 'authenticate',
     
     
-                // the label displayed for the username form field (the |trans filter is applied to it)
-                'username_label' => 'Your username',
+                // the label displayed for the email form field (the |trans filter is applied to it)
+                'email_label' => 'Your email',
     
                 // the label displayed for the password form field (the |trans filter is applied to it)
                 'password_label' => 'Your password',
@@ -63,31 +70,15 @@ class SecurityController extends AbstractController
                 'sign_in_label' => 'Log in',
     
                 // the 'name' HTML attribute of the <input> used for the username field (default: '_username')
-                'username_parameter' => 'my_custom_username_field',
+                'email_parameter' => 'my_custom_email_field',
     
                 // the 'name' HTML attribute of the <input> used for the password field (default: '_password')
-                'password_parameter' => 'my_custom_password_field',
-    
-                // whether to enable or not the "forgot password?" link (default: false)
-                'forgot_password_enabled' => false,
-    
-                // the label displayed for the "forgot password?" link (the |trans filter is applied to it)
-                'forgot_password_label' => 'Forgot your password?',
-    
-                // whether to enable or not the "remember me" checkbox (default: false)
-                'remember_me_enabled' => true,
-    
-                // remember me name form field (default: '_remember_me')
-                'remember_me_parameter' => 'custom_remember_me_param',
-    
-                // whether to check by default the "remember me" checkbox (default: false)
-                'remember_me_checked' => true,
-    
-                // the label displayed for the remember me checkbox (the |trans filter is applied to it)
-                'remember_me_label' => 'Remember me',
-            ]);
-        }
+                'password_parameter' => 'my_custom_password_field',    
+                ]);
+             
+            }
 */
+
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
