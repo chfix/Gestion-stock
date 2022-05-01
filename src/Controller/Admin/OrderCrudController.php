@@ -12,7 +12,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class OrderCrudController extends AbstractCrudController
 {
@@ -62,7 +61,7 @@ class OrderCrudController extends AbstractCrudController
 
         $oqte = ($pqte-$qte);
 
-        if ($pqte > $qte)
+        if ($pqte >= $qte)
         {
             $product->setQuantity($oqte);
         $entityInstance->setTotalPrice($qte*$uprice);
@@ -82,6 +81,27 @@ class OrderCrudController extends AbstractCrudController
     {
         if (!$entityInstance instanceof Order) return;
         $entityInstance->setUpdatedAt(new \DateTimeImmutable);
+        $product = $entityInstance->getProduct();
+
+        $uprice = $product->getPrice();
+        $pqte = $product->getQuantity();
+        $qte = $entityInstance->getQuantity();
+
+        $oqte = ($pqte-$qte);
+
+        if ($pqte >= $qte)
+        {
+        $product->setQuantity($oqte);
+        $entityInstance->setTotalPrice($qte*$uprice);
+        
         parent::updateEntity($em, $entityInstance);
+        }
+        else {
+            $this->addFlash(
+            'notice',
+            'Product quantity requested isnt available, try choosing a smaller quantity'
+        );
+    }
+
     }
 }
